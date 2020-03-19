@@ -5,6 +5,8 @@
 # Create a helper to create a prefix if one isn't provided? Would help if we moved to shared clusters
 prefix: ""
 
+gitlab_app_name: "gitlab-ce"
+
 namespaces:
   - name: do500-workspaces
   - name: do500-gitlab
@@ -21,3 +23,58 @@ operators:
       csv: crwoperator.v2.0.0
     operatorgroup:
       create: true
+
+gitlab:
+  hostname: "gitlab.example.com"
+  namespace: do500-gitlab
+  imagestreams:
+    - name: "gitlab-ce"
+      tag_name: "gitlab-10.2.3"
+      stream_uri: "gitlab/gitlab-ce:10.2.3-ce.0"
+    - name: "gitlab-ce-redis"
+      tag_name: "3.2.3"
+      stream_uri: "redis:3.2.3-alpine"
+
+  services:
+    - name: gitlab-ce
+      ports:
+        - name: 22-ssh
+          protocol: TCP
+          port: 22
+          targetPort: 22
+        - name: 443-https
+          protocol: TCP
+          port: 443
+          targetPort: 443
+      selectors:
+        - key: deploymentconfig
+          value: gitlab-ce
+    - name: gitlab-ce-redis
+      ports:
+        - name: 6379-redis
+          protocol: TCP
+          port: 6379
+          targetPort: 6379
+      selectors:
+        - key: deploymentconfig
+          value: gitlab-ce-redis
+    - name: gitlab-ce-postgresql
+      ports:
+        - name: 5432-postgresql
+          protocol: TCP
+          port: 5432
+          targetPort: 5432
+      selectors:
+        - key: deploymentconfig
+          value: gitlab-ce-postgresql
+
+  pvcs:
+    - name: gitlab-ce-redis-data
+      size: 512Mi
+    - name: gitlab-ce-etc
+      size: 1Gi
+    - name: gitlab-ce-data
+      size: 1Gi
+    - name: gitlab-ce-postgresql
+      size: 1Gi
+ 

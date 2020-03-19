@@ -1,9 +1,0 @@
-argocd:
-  install: true
-  namespace: do500-argocd
-
-crw:
-  install: true
-  namespace: do500-workspaces
-  tlsSupport: true
-

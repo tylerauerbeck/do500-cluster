@@ -1,0 +1,27 @@
+{{- if .Values.gitlab }}
+{{- range $svc := .Values.gitlab.services }}
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ $svc.name | quote }}
+  labels:
+    app: {{ $.Values.gitlab_app_name }}
+spec:
+  ports:
+{{- range $port := $svc.ports }}
+  - name: {{ $port.name }}
+    protocol: {{ $port.protocol }}
+    port: {{ $port.port }}
+    targetPort: {{ $port.targetPort }}
+{{- end }}
+  selector:
+    app: {{ $.Values.gitlab_app_name }}
+{{- range $sel := $svc.selectors }}
+    {{ $sel.key }}: {{ $sel.value }}
+{{- end }}
+  type: ClusterIP
+  sessionAffinity: None
+{{- end }}
+{{- end }}
+
