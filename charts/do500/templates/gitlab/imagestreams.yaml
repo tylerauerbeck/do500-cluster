@@ -1,17 +1,18 @@
-{{- if .Values.gitlab }}
+{{- if .Values.gitlab -}}
 {{- range $is := .Values.gitlab.imagestreams }}
 ---
 kind: ImageStream
 apiVersion: v1
 metadata:
-  name: {{ $is.name | quote }}
+  name: "{{ $is.name }}"
+  namespace: {{ $.Values.gitlab.namespace }}
   labels:
-    app: {{ $.Values.gitlab_app_name }}
+    app: "{{ $.Values.gitlab_app_name }}"
 spec:
   tags:
   - name: {{ $is.tag_name }}
     from:
-      kind: {{ $is.stream_type | default "DockerImage" }}
+      kind: DockerImage
       name: {{ $is.stream_uri }}
 {{- end }}
 {{- end }}

@@ -33,8 +33,10 @@
 {{- end -}}
 
 {{- define "gitlab.ldap.bind_password" -}}
-{{ print (lookup "v1" "Secret" "openshift-config" "ldap-secret").data.bindPassword | b64dec -}} 
-{{- end -}}
+{{- if (lookup "v1" "Secret" "openshift-config" "ldap-secret") }}
+{{ print (lookup "v1" "Secret" "openshift-config" "ldap-secret").data.bindPassword | b64dec -}}
+{{- end }}
+{{- end }}
 
 {{- define "gitlab.ldap.bind_dn" -}}
 {{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) }}
@@ -43,4 +45,20 @@
 
 {{- define "do500.app_domain" -}}
 {{- print (lookup "operator.openshift.io/v1" "IngressController" "openshift-ingress-operator" "default").status.domain -}}
+{{- end -}}
+
+{{- define "gitlab.root_password" -}}
+{{- print (randAlphaNum 10) -}}
+{{- end -}}
+
+{{- define "gitlab.postgres.user" -}}
+{{- print (randAlphaNum 10) -}}
+{{- end -}}
+
+{{- define "gitlab.postgres.password" -}}
+{{- print (randAlphaNum 10) -}}
+{{- end -}}
+
+{{- define "gitlab.postgres.admin_password" -}}
+{{- print (randAlphaNum 10) -}}
 {{- end -}}
