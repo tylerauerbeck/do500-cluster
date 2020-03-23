@@ -10,6 +10,7 @@ gitlab_app_name: "gitlab-ce"
 namespaces:
   - name: do500-workspaces
   - name: do500-gitlab
+  - name: do500-slides
 
 operators:
   - name: codeready-workspaces
@@ -34,3 +35,18 @@ gitlab:
     - name: "gitlab-ce-redis"
       tag_name: "5.0.4"
       stream_uri: "redis:5.0.4-alpine"
+
+crw:
+  namespace: do500-workspaces
+  name: "codeready-workspaces"
+  devRegImage: "quay.io/rht-labs/devfileregistry:test"
+  tlsSupport: true
+
+docs:
+  name: do500-slides
+  namespace: do500-slides 
+  build:
+    source_context_dir: "slides"
+    source_repo: "https://github.com/rht-labs/enablement-docs"
+    s2i_name: "nodejs"
+    s2i_tag: "10"

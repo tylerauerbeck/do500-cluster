@@ -2,16 +2,16 @@
 apiVersion: org.eclipse.che/v1
 kind: CheCluster
 metadata:
-  name: {{ .name | default "codeready-workspaces" | quote }}
-  namespace: {{ .namespace | default "do500-workspaces" | quote }}
+  name: {{ .Values.crw.name | default "codeready-workspaces" | quote }}
+  namespace: {{ .Values.crw.namespace | default "do500-workspaces" | quote }}
 spec:
   server:
-    cheImageTag: {{ .cheImageTag | default "" | quote }}
-    cheFlavor: {{ .cheFlavor | default "codeready" | quote }}
-    devfileRegistryImage: {{ .devRegImage | default "" | quote }}
-    pluginRegistryImage: {{ .pluginRegImage | default "" | quote }}
-    tlsSupport: {{ .tlsSupport | default false }}
-    selfSignedCert: {{ .selfSignedCert | default false }}
+    cheImageTag: {{ .Values.crw.cheImageTag | default "" | quote }}
+    cheFlavor: {{ .Values.crw.cheFlavor | default "codeready" | quote }}
+    devfileRegistryImage: {{ .Values.crw.devRegImage | default "" | quote }}
+    pluginRegistryImage: {{ .Values.crw.pluginRegImage | default "" | quote }}
+    tlsSupport: {{ .Values.crw.tlsSupport | default false }}
+    selfSignedCert: {{ .Values.crw.selfSignedCert | default false }}
   database:
     externalDb: false
     chePostgresHostName: ''
