@@ -2,7 +2,7 @@
 {{- range $is := .Values.gitlab.imagestreams }}
 ---
 kind: ImageStream
-apiVersion: v1
+apiVersion: images.openshift.io/v1
 metadata:
   name: "{{ $is.name }}"
   namespace: {{ $.Values.gitlab.namespace }}
