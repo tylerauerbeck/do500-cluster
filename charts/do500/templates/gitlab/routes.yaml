@@ -1,6 +1,6 @@
 {{- if .Values.gitlab }}
 kind: Route
-apiVersion: v1
+apiVersion: routes.openshift.io/v1
 metadata:
   name: "{{ $.Values.gitlab_app_name }}"
   namespace: "{{ $.Values.gitlab.namespace }}"
