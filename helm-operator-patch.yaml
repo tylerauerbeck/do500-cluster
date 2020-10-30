@@ -1,15 +1,1 @@
-
-{
-  "spec": {
-    "template": {
-      "spec": {
-        "containers": [
-          - "name": "helm-operator"
-            "args": [
-              - --enabled-helm-versions=v3
-            ]
-        ]
-      }
-    }
-  }
-}
+[{"op": "add", "path": "/spec/template/spec/containers/0/args/-", "value":"--enabled-helm-versions=v3"}]
