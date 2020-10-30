@@ -4,7 +4,7 @@
 {{ $db_admin_pass := include "gitlab.postgres.admin_password" . }}
 ---
 kind: DeploymentConfig
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 metadata:
   name: "{{ $.Values.gitlab_app_name }}"
   namespace: "{{ $.Values.gitlab.namespace }}"
@@ -128,7 +128,7 @@ spec:
       serviceAccount: "{{ $.Values.gitlab_app_name }}-user"
 ---
 kind: DeploymentConfig
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 metadata:
   name: "{{ $.Values.gitlab_app_name }}-redis"
   namespace: "{{ $.Values.gitlab.namespace }}"
@@ -192,7 +192,7 @@ spec:
       dnsPolicy: ClusterFirst
 ---
 kind: DeploymentConfig
-apiVersion: v1
+apiVersion: apps.openshift.io/v1
 metadata:
   name: "{{ $.Values.gitlab_app_name }}-postgresql"
   namespace: "{{ $.Values.gitlab.namespace }}"
