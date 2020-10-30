@@ -3,6 +3,6 @@ spec:
   templates:
     spec:
       containers:
-        - name: helm-operator
-          args:
-            - --enabled-helm-versions=v3
+      - name: helm-operator
+        args:
+        - --enabled-helm-versions=v3
