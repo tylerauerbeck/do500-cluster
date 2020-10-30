@@ -1,5 +1,5 @@
 {{- define "gitlab.ldap.port" -}}
-{{- $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) -}}
+{{- $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 1) -}}
 {{- $protocol := regexFind "^ldap[s]*" $ldap.ldap.url -}}
 {{- if eq $protocol "ldap" }}
 {{- print "389" -}}
@@ -9,22 +9,22 @@
 {{- end -}}
 
 {{- define "gitlab.ldap.base" -}}
-{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) }}
+{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 1) }}
 {{- regexReplaceAll "^ldap[s]*://" $ldap.ldap.url "${1}" | regexFind "/.*" | trimAll "/" }}
 {{- end -}}
 
 {{- define "gitlab.ldap.uri" -}}
-{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) }}
+{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 1) }}
 {{- regexReplaceAll "^ldap[s]*://" $ldap.ldap.url "${1}" | regexFind ".*/" | trimAll "/" }}
 {{- end -}}
 
 {{- define "gitlab.ldap.user_filter" -}}
-{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) }}
+{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 1) }}
 {{- regexReplaceAll "^ldap[s]*://" $ldap.ldap.url "${1}" | regexFind "\\?.*" | trimAll "?" }}
 {{- end -}}
 
 {{- define "gitlab.ldap.validate_certs" -}}
-{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) }}
+{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 1) }}
 {{- if eq $ldap.ldap.insecure true -}}
 {{- print "false" -}}
 {{- else -}}
@@ -39,7 +39,7 @@
 {{- end }}
 
 {{- define "gitlab.ldap.bind_dn" -}}
-{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 0) }}
+{{ $ldap := (index (lookup "config.openshift.io/v1" "OAuth" "" "cluster").spec.identityProviders 1) }}
 {{- print $ldap.ldap.bindDN -}}
 {{- end -}}
 
